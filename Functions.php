@@ -31,7 +31,7 @@ class Functions {
     }
 
     static public function getCurrentYear(){
-        echo date("Y");
+        return date("Y");
     }
 
 }
