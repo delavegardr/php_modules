@@ -30,4 +30,8 @@ class Functions {
         return $totalHoras;
     }
 
+    static public function getCurrentYear(){
+        echo date("Y");
+    }
+
 }
