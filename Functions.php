@@ -30,8 +30,15 @@ class Functions {
         return $totalHoras;
     }
 
+	static public function getCurrentDate( $format = "Y-m-d" ){
+		return date( $format );
+	}
+
+	static public function getCurrentDateTime( $format = "Y-m-d H:i:s" ){
+		return date( $format, time());
+	}
     static public function getCurrentYear(){
-        echo date("Y");
+        return date("Y");
     }
 
 }
