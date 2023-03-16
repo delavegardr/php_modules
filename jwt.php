@@ -12,6 +12,7 @@ require_once "vendor/autoload.php";
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException;
 
 class IJWT {
     private $algoritmo;
@@ -64,7 +65,14 @@ class IJWT {
     public function decode( $token, $publicKey ){
         try {
             $decoded = JWT::decode( $token, new Key( $publicKey, $this->getAlgoritmo() ));
-        } catch (ExpiredException $th) {
+        } catch (ExpiredException $e) {
+            log_message( 'error', $e->getMessage() );
+            return false;
+        } catch (SignatureInvalidException $e ) {
+            log_message( 'error', $e->getMessage() );
+            return false;
+        } catch (UnexpectedValueException $e ) {
+            log_message( 'error', $e->getMessage() );
             return false;
         }
 
