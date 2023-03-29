@@ -8,7 +8,8 @@ class Response {
 
     static public function toJson( $data ){
         Response::setHeader();
-        return json_encode( $data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
+        //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
+        return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
 
     static public function toJsonWithStatus( $ok, $description, $data ){
@@ -19,14 +20,16 @@ class Response {
         ];
 
         Response::setHeader();
-        return json_encode( $data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
+        //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
+        return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
 
 	static public function toJsonWithCountData( $data ){
         array_unshift( $data, [ "totalRegistros" => count($data) ] );
 
         Response::setHeader();
-		return json_encode( $data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
+        //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
+		return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
 	}
 
     static public function toXml( $ok, $description, $data ){
