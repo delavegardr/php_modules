@@ -87,4 +87,8 @@ class Functions {
         return $source;
     }
 
+    static public function setDateFormat ( $date ){
+        return date( 'd/m/Y H:i:s', strtotime($date) );
+    }
+    
 }
