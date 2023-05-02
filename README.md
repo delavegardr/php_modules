@@ -11,4 +11,4 @@ Importar la libreria y luego utilizar los metodos estaticos de la clase QuerySql
 Esta libreria implementa todo lo relacionado con el armado de una respuesta HTTP
 
 #### Como utilizarla?
-Importar la libreria y luego utilizar los metodos estaticos de la clase Response
+Importar la libreria y luego utilizar los metodos estaticos de la clase Respons
