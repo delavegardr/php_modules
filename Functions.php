@@ -37,9 +37,9 @@ class Functions {
     static public function getCurrentDateTime( $format = "Y-m-d H:i:s" ){
 		return date( $format, time());
 	}
-    
-    static public function getCurrentYear(){
-        return date("Y");
+
+    static public function getCurrentMonth(){
+        return date("m");
     }
 
     static public function strToDateInText( String $date ){
