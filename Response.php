@@ -15,6 +15,7 @@ class Response {
 
     static public function toJsonError( $statusCode, $msg ){
         Response::setHeader();
+        Response::CORSEnable();
         http_response_code( $statusCode );
 
         $data["errorCode"] = $statusCode;
