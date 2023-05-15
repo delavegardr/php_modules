@@ -8,6 +8,7 @@ class Response {
 
     static public function toJson( $data ){
         Response::setHeader();
+        Response::CORSEnable();
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
         return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
@@ -20,6 +21,8 @@ class Response {
         ];
 
         Response::setHeader();
+        Response::CORSEnable();
+
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
         return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
@@ -28,6 +31,8 @@ class Response {
         array_unshift( $data, [ "totalRegistros" => count($data) ] );
 
         Response::setHeader();
+        Response::CORSEnable();
+
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
 		return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
 	}
@@ -42,4 +47,15 @@ class Response {
         return false; //HAY QUE IMPLEMENTARLA 
     }
 
+    static public function CORSEnable(){
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method == "OPTIONS") {
+            die();
+        }
+    }
+    
 }

@@ -47,10 +47,11 @@ class Request {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $strHeaders);
         }
         
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query( $data ) );
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $data ) );
         $response = curl_exec($ch);
         curl_close($ch);
 
         return $response;
     }
+
 }
