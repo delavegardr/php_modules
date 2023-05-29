@@ -34,7 +34,7 @@ class Request {
         return $response;
     }
 
-    static public function post( String $url, array $data, array $headers = [], $useQueryParam = true ){
+    static public function post( String $url, array $data, array $headers = [], $useQueryParam = false ){
         $strHeaders = Request::makeHeaders( $headers );
 
         $ch = curl_init();
