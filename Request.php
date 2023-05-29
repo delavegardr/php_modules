@@ -34,7 +34,7 @@ class Request {
         return $response;
     }
 
-    static public function post( String $url, array $data, array $headers = [] ){
+    static public function post( String $url, array $data, array $headers = [], $useQueryParam = true ){
         $strHeaders = Request::makeHeaders( $headers );
 
         $ch = curl_init();
@@ -47,7 +47,12 @@ class Request {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $strHeaders);
         }
         
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $data ) );
+        $dataSend = http_build_query( $data );
+        if ( !$useQueryParam ){
+            $dataSend = json_encode( $data );
+        }
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataSend );
         $response = curl_exec($ch);
         curl_close($ch);
 
