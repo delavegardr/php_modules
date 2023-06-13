@@ -13,7 +13,7 @@ class Validator {
         $patron = [4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
         
         $rut = str_split( $rut );
-        if ( count($rut) < 12 ){
+        if ( !(count($rut) == 12) ){
             return false;
         }
         //Transformo los elementos a enteros para poder comenzar a verificar los digitos       
