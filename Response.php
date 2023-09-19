@@ -1,32 +1,33 @@
 <?php
 
+require_once APPPATH . '/libraries/php_modules/Cors.php';
+require_once APPPATH . '/config/environment.php';
+
 class Response {
-
-    static public function CORSEnable(){
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-
-        $method = $_SERVER['REQUEST_METHOD'];
-        if($method == "OPTIONS") {
-            die();
-        }
-    }
     
-    static private function setHeader(){
-        header('Content-Type: application/json; charset=utf-8');
+    static public function makeMessage( $ok, $description, $data ){
+        return [
+            "ok" => $ok,
+            "description" => $description,
+            "data" => $data,
+        ];
+    }
+
+    static private function setHeader( $type = 'application/json' ){
+        header('Content-Type: ' . $type . '; charset=utf-8');
+
+        $cors = new Cors( Env::getCorsConfig() );
+        $cors->setConfig();
     }
 
     static public function toJson( $data ){
         Response::setHeader();
-        Response::CORSEnable();
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
         return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
 
     static public function toJsonError( $statusCode, $msg ){
         Response::setHeader();
-        Response::CORSEnable();
         http_response_code( $statusCode );
 
         $data["errorCode"] = $statusCode;
@@ -37,24 +38,17 @@ class Response {
     }
 
     static public function toJsonWithStatus( $ok, $description, $data ){
-        $data = [
-            "ok" => $ok,
-            "description" => $description,
-            "data" => $data,
-        ];
-
         Response::setHeader();
-        Response::CORSEnable();
-
+        
+        $data = Response::makeMessage( $ok, $description, $data );
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
         return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );
     }
 
 	static public function toJsonWithCountData( $data ){
-        array_unshift( $data, [ "totalRegistros" => count($data) ] );
-
         Response::setHeader();
-        Response::CORSEnable();
+
+        array_unshift( $data, [ "totalRegistros" => count($data) ] );
 
         //SE PUEDE AGREGAR EL PARAMETRO JSON_FORCE_OBJECT PARA QUE LO DEVUELVA COMO UN OBJETO Y NO COMO UN ARRAY
 		return json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE );

@@ -11,6 +11,25 @@ class Request {
         return $resHeaders;
     }
 
+    static public function getHeaders(){
+        return getallheaders();
+    }
+
+    static public function getHeader( $key ){
+        $headers = Request::getHeaders();
+
+        $resValue = '';
+        foreach ($headers as $header => $value) {
+            if ($header === $key){
+                $resValue = $value;
+
+                break;
+            }
+        }
+        
+        return $resValue;
+    }
+
     static public function get( String $url, array $data, array $headers = [] ){
         $headers = Request::makeHeaders( $headers );
         $params = http_build_query($data);
