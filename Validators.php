@@ -45,7 +45,7 @@ class Validator {
         }   
 
         $d = ( $v[0] * 10 ) + $v[1];
-        if ( ($d < 1) || ($d > 21) ){
+        if ( ($d < 1) || ($d > 22) ){
             return false;
         }   
 
