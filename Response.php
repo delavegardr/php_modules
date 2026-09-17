@@ -1,7 +1,6 @@
 <?php
 
 require_once APPPATH . '/libraries/php_modules/Cors.php';
-require_once APPPATH . '/config/environment.php';
 
 class Response {
     
@@ -16,7 +15,28 @@ class Response {
     static private function setHeader( $type = 'application/json' ){
         header('Content-Type: ' . $type . '; charset=utf-8');
 
-        $cors = new Cors( Env::getCorsConfig() );
+        $corsConfig['allowed_cors_headers'] = [
+            'Origin',
+            'X-Requested-With',
+            'Content-Type',
+            'Accept',
+            'Access-Control-Request-Method',
+            'Authorization',
+        ];
+
+        $corsConfig['allowed_cors_methods'] = [
+            'GET',
+            'POST',
+            'OPTIONS',
+            'PUT',
+            'PATCH',
+            'DELETE',
+        ];
+
+        $corsConfig['allow_any_cors_domain'] = true;
+        $corsConfig['forced_cors_headers'] = [];
+
+        $cors = new Cors( $corsConfig );
         $cors->setConfig();
     }
 
