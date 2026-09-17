@@ -36,11 +36,11 @@ class IJWT {
         return $this->ttl;
     }
 
-    private function getPayload( $data, $ttl ){
+    private function getPayload( $data, $ttl, $leeway = 0 ){
         $time = time();
-        
+
         $payload = [
-            "iat"  => $time,
+            "iat"  => $time - $leeway,
             "exp"  => $time + $ttl,
             "data" => $data,
         ];
@@ -48,8 +48,8 @@ class IJWT {
         return $payload;
     }
 
-    public function generate( $data, $ttl ){
-        $payload = $this->getPayload( $data, $ttl );
+    public function generate( $data, $ttl, $leeway = 0 ){
+        $payload = $this->getPayload( $data, $ttl, $leeway );
 
         $res = JWT::encode( $payload, $this->getSecretkey(), $this->getAlgoritmo() );
         return $res;
